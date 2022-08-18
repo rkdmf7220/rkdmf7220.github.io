@@ -190,7 +190,9 @@ pre {
   @extend %clearfix;
 }
 
-
+pre.badge::before {
+  text-transform: none !important;
+}
 
 /**
  * Clearfix
