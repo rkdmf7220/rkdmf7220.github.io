@@ -2,7 +2,7 @@
 layout: post
 title: vue.js 공부
 subtitle: v-bind, v-on, v-for, props, emit
-categories: jekyll
+categories: vue.js
 tags: [vue.js, practice]
 ---
 
@@ -115,7 +115,7 @@ export default {
 2. 배열 안의 값을 itemData라는 이름으로 가져옵니다.
 3. 마지막으로, key에 고유한 값을 동적으로 넣어줍니다. 여기선 요소 안의 id를 키로 잡았습니다.
 
-# key를 넣는 이유는?
+### key를 넣는 이유는?
 배열의 속성을 지정하거나 길이를 수정하는 등의 변화를 vue가 감지하지 못하는 경우도 있고,\
 컴포넌트는 자체 범위가 분리되어 있어 데이터가 변경되어도 자동으로 전달되지 않습니다.
 
@@ -123,12 +123,26 @@ export default {
 
 **※ vue3부터는 :key가 필수가 되었으며, 누락될 경우 에러를 띄우며 페이지가 로딩되지 않습니다.**
 
-## 부모 컴포넌트에서 자식에게 데이터를 물려줄 땐?
-```ParentComponent.vue
+## vue 컴포넌트간의 데이터를 주고받기
+vue는 컴포넌트를 이용해 화면을 구성하고 각 컴포넌트마다 고유한 범위를 가지고 있습니다.\
+때문에, 같은 웹 페이지 안이라고 해도 컴포넌트가 다르면 그 데이터를 직접적으로 참조할 수 없습니다.
 
+이를 해결하기 위해 컴포넌트 통신 방법인 **props**와 **emit**을 사용해야 합니다.\
+props는 **부모**에서 **자식**으로 **props**라는 속성으로 전달하며,\
+emit은 **자식**에서 **부모**로 **이벤트**를 전달합니다.
+
+### props로 자식에게 데이터 전달
+기본 작성 방식은 부모 컴포넌트에서 **v-bind**를 이용해 **프룹스 명**을 지정하고 데이터를 내려줍니다.\
+`<child-component v-bind:프룹스 속성 명="현재(부모) 컴포넌트의 데이터 속성 명"/>`\
+자식 컴포넌트에선 props에서 내려준 **속성 명**에 **형**을 **지정**해주면 됩니다.\
+`props: {프룹스 속성 명: 데이터의 형}`\
+**※ v-bind는 :로 축약시켜 쓸 수 있습니다.**
+
+
+```ParentComponent.vue
 <template>
   <div>
-    <child-component item-data="this.myData"/>
+    <child-component :item-data="myData"/>
   </div>
 </template>
 
@@ -157,9 +171,7 @@ export default {
 ```
 ```ChildComponent.vue
 <template>
-  <div>
-    <span>{{ itemData }}</span>
-  </div>
+  <div> ｛{ itemData }} </div>
 </template>
 
 <script>
@@ -170,3 +182,6 @@ export default {
 }
 </script>
 ```
+
+### emit으로 부모에게 데이터 전달
+emit은 이벤트에 인자를 담아 부모 컴포넌트에게 전달하며, 이것을 부모 컴포넌트의 해당 이벤트에서 매개변수로 사용할 수 있습니다.
