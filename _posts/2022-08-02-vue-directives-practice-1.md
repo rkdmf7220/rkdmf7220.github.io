@@ -184,4 +184,60 @@ export default {
 ```
 
 ### emit으로 부모에게 데이터 전달
-emit은 이벤트에 인자를 담아 부모 컴포넌트에게 전달하며, 이것을 부모 컴포넌트의 해당 이벤트에서 매개변수로 사용할 수 있습니다.
+emit은 이벤트에 인자를 담아 부모 컴포넌트에게 전달하며, 이것을 부모 컴포넌트의 해당 이벤트에서 매개변수로 사용할 수 있습니다.\
+작성 방식은 **자식 컴포넌트**의 **메소드**나 **라이프 사이클 훅** 등에  **$emit**를 추가합니다.\
+`this.$emit('이벤트 명');`\
+이후 부모 컴포넌트 템플릿에서 이벤트를 받기 위한 코드를 작성합니다.\
+`<div><child-component v-on:이벤트 명="부모에서 실행할 메소드 명"/></div>`
+
+```ChildComponent.vue
+<template>
+  <input
+  type="text"
+  v-model="inputData"
+  @input="inputTextUpdate">
+</template>
+
+<script>
+export default {
+  name: "ChildComponent",
+  data() {
+    return {
+      inputData: ""
+    }
+  },
+  methods: {
+    inputTextUpdate() {
+      this.$emit('update:text', this.inputData)
+    }
+  }
+}
+</script>
+```
+```ParentComponent.vue
+<template>
+  <div>
+    <ChildComponent @update:text="updateText"/>
+    <p>입력한 값은 : ｛{ inputText }}</p>
+  </div>
+</template>
+
+<script>
+import ChildComponent from "@/components/ChildComponent";
+export default {
+  name: "ParentComponent",
+  components: {ChildComponent},
+  data() {
+    return {
+      inputText: null
+    }
+  },
+  methods: {
+    updateText(data) {
+      this.inputText = data
+    }
+  }
+}
+</script>
+```
+![emit 작동 결과물]({{ site.url }}/assets/images/posts/vuejs/vue-directives-practice-1/emit-example.gif)
