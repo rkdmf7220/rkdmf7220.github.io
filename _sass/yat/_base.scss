@@ -145,20 +145,20 @@ blockquote {
 pre,
 code {
   @include relative-font-size(0.9375);
-  color: $text-color;
+  color: $white-color;
 }
 
 *:not(pre) > code {
   padding: 3px 6px;
   border-radius: 3px;
-  background-color: #eee;
+  background-color: #272822;
   margin: 0 5px;
 }
 
 pre {
   overflow-x: auto;
   position: relative;
-  background-color: #f0f0f0;
+  background-color: #272822;
 
   > code {
     display: inline-block;

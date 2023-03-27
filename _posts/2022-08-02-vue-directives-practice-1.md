@@ -29,7 +29,8 @@ tags: [vue.js, practice]
 v-model의 동작 방식은 v-bind와 v-on의 기능 조합으로 동작합니다.\
 매번 일일이 v-bind와 v-on 속성을 지정하지 않아도 작동 하도록 고안된 문법입니다.
 
-```Practice.vue(양방향)
+```vue
+// Practice.vue(양방향)
 <template>
   <input type="text" v-model="inputText">
 </template>
@@ -45,7 +46,8 @@ export default {
 </script>
 ```
 
-```Practice.vue(단방향)
+```vue
+// Practice.vue(단방향)
 <template>
   <input type="text" v-bind="inputText"  v-on="updateInput">
 </template>
@@ -80,7 +82,7 @@ v-on은 **@**로 축약하여 작성할 수 있습니다. → @click="onClickEve
 **리스트 렌더링**. 엘리먼트에 배열을 연결할 때 사용하며, 지정한 배열을 반복문 형식으로 리스트를 렌더링합니다.
 v-for="item in items" 형식의 문법으로 작성하며, **item**은 이 반복되는 배열 엘리먼트의 **별칭**이며, **items**는 **원본 데이터의 배열**입니다.
 
-```Practice.vue
+```vue
 <template>
   <ul>
     <li v-for="itemData in myList" :key="itemData.id">
@@ -139,7 +141,8 @@ emit은 **자식**에서 **부모**로 **이벤트**를 전달합니다.
 **※ v-bind는 :로 축약시켜 쓸 수 있습니다.**
 
 
-```ParentComponent.vue
+```vue
+// ParentComponent.vue
 <template>
   <div>
     <child-component :item-data="myData"/>
@@ -169,7 +172,8 @@ export default {
 }
 </script>
 ```
-```ChildComponent.vue
+``` vue
+// ChildComponent.vue
 <template>
   <div> ｛{ itemData }} </div>
 </template>
@@ -190,7 +194,8 @@ emit은 이벤트에 인자를 담아 부모 컴포넌트에게 전달하며, �
 이후 부모 컴포넌트 템플릿에서 이벤트를 받기 위한 코드를 작성합니다.\
 `<div><child-component v-on:이벤트 명="부모에서 실행할 메소드 명"/></div>`
 
-```ChildComponent.vue
+```vue
+// ChildComponent.vue
 <template>
   <input
   type="text"
@@ -214,7 +219,8 @@ export default {
 }
 </script>
 ```
-```ParentComponent.vue
+``` vue
+// ParentComponent.vue
 <template>
   <div>
     <ChildComponent @update:text="updateText"/>
